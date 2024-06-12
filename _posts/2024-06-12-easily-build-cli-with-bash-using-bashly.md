@@ -1,5 +1,6 @@
-## Build CLI with Bash using bashly
+## Easily build CLI with Bash using bashly
 (draft)
+
 The use cases and realization possibilites of CLIs are various. Most programming languages and frameworks come with libraries to handle shell based commands in their own way. My all time favorite is to build CLIs with Bash since it seems the most native and portable way to script in a unix environment.
 
 Often it happens that we would write scripts within a project for CI/CD purposes that could be summarized in a CLI. Instead of having a bloated `/bin/scripts` within your project, using a project-specific CLI can be much more sustainable and approachable. A CLI built with bash has the advantage to be usable almost anwywhere and with almost any other tool/script. 
