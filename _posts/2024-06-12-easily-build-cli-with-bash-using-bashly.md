@@ -14,9 +14,52 @@ In this case an amazing tool called [bashly](https://github.com/DannyBen/bashly)
 All you need is Ruby (or Docker) to run bashly and the knowledge of how to organize your scripts as a CLI inside your project.
 
 ---
+
+Create a folder within your project where you want to store your CLI source code.
+
+```bash
+    mkdir bash
+```
+
+Example Project Structure
+
+```
+|
+- app
+  |- src
+  |- public
+  |- ..
+|- bin
+|- bash
+
+```
+
+Initialize your CLI
+
+```bash
+    cd bash
+    bashly init --minimal
+```
+
+Edit the `yaml` to your needs
+```yaml
+    name: cli
+    help: run your scripts with style
+    version: 0.1.0
+    ..
+```
+
+Generate the CLI
+
+```bash
+    bashly generate
+```
+
+
+
+
 <!-- 
 ### Installing bashly
-
 
 
 #### Some T-SQL Code
