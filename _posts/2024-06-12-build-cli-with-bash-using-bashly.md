@@ -2,9 +2,10 @@
 
 Are you thinking of building a simple CLI and struggle with Shell Script Development?
 
-Building a CLI with bash can be cumbersome, especially if you are new to the to Unix shell world. Sometimes you just want to have a simple but more structured way of managing your scripts without losing too much time for implementing different user inputs or command logic.
+Building a CLI with Bash can be cumbersome, especially if you are new to the to Unix shell world. Sometimes you just want to have a simple but more structured way of managing your scripts, without losing too much time for implementing different user inputs or command logic.
 
 It is super easy with a Bash command line framework and CLI generator called [bashly](https://github.com/DannyBen/bashly).
+
 ---
 
 ### Introduction to bashly
@@ -49,13 +50,12 @@ Create a folder within your project where you want to store your CLI source code
 
 Create configuration
 
-
 ```bash
     cd bash
     bashly init --minimal
 ```
 
-Edit the `yaml` to your needs
+Configure your CLI in the `yaml` to your needs
 ```yaml
     name: cli
     help: run your scripts with style
@@ -63,13 +63,17 @@ Edit the `yaml` to your needs
     ..
 ```
 
+See the documentation on [configuration](https://bashly.dannyb.co/configuration/command/) on how to add commands, arguments, flags, environment variables and dependencies.
+
 Generate the CLI
 
 ```bash
     bashly generate
 ```
 
-..
+From here it is super easy to continue. Just adjust your code within the `yaml` and iterate the generation of the CLI file.
+
+Also bashly supports tons of advanced features that you can check in the [official docs](https://bashly.dannyb.co/advanced/strings/).
 
 ### Links
 
