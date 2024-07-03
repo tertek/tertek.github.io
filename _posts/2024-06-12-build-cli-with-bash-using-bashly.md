@@ -1,3 +1,6 @@
+---
+tags: bash,cli,yaml
+---
 ## Build CLI with Bash using bashly
 
 Are you thinking of building a simple CLI and struggle with Shell Script Development?
