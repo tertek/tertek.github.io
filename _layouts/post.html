@@ -29,7 +29,7 @@ layout: default
   <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
 
-{% if site.comments_repo %}
+{% if site.enable_comments %}
   {% include comments.html %}
 {% endif %}
 

@@ -1,3 +1,4 @@
+#jekyll theme by https://github.com/chadbaldwin/chadbaldwin.github.io
 title: "tertek's blog"
 author: "Ekin Tertemiz"
 description: "A simple blog about mostly code related stuff I come across during my work." # This will show up in places like twitter, linkedin, etc, if you share your sites url as a post.
@@ -19,7 +20,7 @@ github_username: "tertek"
 ######### Nothing below needs to be changed (unless you know what you're doing) #########
 #########################################################################################
 theme: "minima"
-
+enable_comments: true
 rss: rss
 
 kramdown:
