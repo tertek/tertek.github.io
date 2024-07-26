@@ -1,0 +1,146 @@
+---
+tags: llm, digital ocean,
+---
+## Setup AnythingLLM on Digital Ocean
+
+Open Source AI and LLMs are the path forward, as also recently [a famously infamous company has declared](https://about.fb.com/news/2024/07/open-source-ai-is-the-path-forward/). Therefore I checked out some of the available Open Source projects and stumbled upon [AnythingLLM](https://anythingllm.com/). What I like about it is that you can plug-in any LLM, you can run it on a server, access it through a web frontend and - this is super nice - it supports multiple users!
+
+This is why I decided to setup a demo instance on Digital Ocean and test it. Although the community has added several cloud deployment setups, the whole process is not fully documented and that is why I am sharing this guide. I hope it saves you some time in case you also want to spin up a droplet and share it with some co-workers - without wasting energy on configuration.
+
+---
+### Requirements
+
+- DigitalOcean account with billing information
+    - Since this guide aims to deploy to Digital Ocean, you will need to have a valid Digital Ocean Account and [create a personal access token for Digital Ocean](https://docs.digitalocean.com/reference/api/create-personal-access-token/).
+    - If you do not have an account yet, you can [use my referal link to get a free $200 credit](https://m.do.co/c/f740ed2e897d).
+
+- terraform
+    - Follow the instructions in the [official Terraform documentation](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli#install-terraform) for your operating system.
+
+- git
+
+
+### Getting started
+
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/Mintplex-Labs/anything-llm.git
+cd anything-llm 
+```
+
+Configure terraform:
+1. Open the file `digitalocean/terraform/main.tf`
+2. Search for the line with a comment "Add your DigitalOcean API token here"
+3. Add Digital Ocean Token in the line below
+4. Optionally, adjust the droplet size to your needs. You can [check API slugs](https://slugs.do-api.dev/). To further optimize the AI it could be necessary to go with GPU optimized droplets. More on that maybe on another post. I have chosen `s-4vcpu-8gb` as a good starting point.
+
+Configure docker:
+1. Add new `.env` file at `docker/.env`
+2. Insert the minimum configuration:
+
+```env
+SIG_KEY='GENERATE_A_KEY' # Please generate random string at least 32 chars long.
+SIG_SALT='GENERATE_A_KEY' # Please generate random string at least 32 chars long.
+JWT_SECRET='GENERATE_A_KEY' # Please generate random string at least 32 chars long.
+AUTH_TOKEN='CHOSE_A_STRONG_PASSWORD' # This is the password to your application
+
+STORAGE_DIR='/app/server/storage'
+LLM_PROVIDER='ollama'
+OLLAMA_BASE_PATH='http://172.17.0.1:11434' # Use 172.17.0.1 instead of `host.docker.internal`, otherwise the host cannot be reached.
+OLLAMA_MODEL_PREF='llama3.1'
+OLLAMA_MODEL_TOKEN_LIMIT='4096'
+OLLAMA_KEEP_ALIVE_TIMEOUT='300'
+
+EMBEDDING_MODEL_PREF='nomic-embed-text:latest'
+EMBEDDING_ENGINE='ollama'
+EMBEDDING_BASE_PATH='http://172.17.0.1:11434' # Use 172.17.0.1 instead of `host.docker.internal`, otherwise the host cannot be reached.
+EMBEDDING_MODEL_MAX_CHUNK_LENGTH='8192'
+
+VECTOR_DB='lancedb'
+WHISPER_PROVIDER='local'
+DISABLE_TELEMETRY='true'
+TTS_PROVIDER='native'
+
+#------ Serper.dev ----------- https://serper.dev/
+AGENT_SERPER_DEV_KEY='SIGN_UP_TO_GET_A_FREE_KEY' 
+
+#------ Serply.io ----------- https://serply.io/
+AGENT_SERPLY_API_KEY='SIGN_UP_TO_GET_A_FREE_KEY'
+```
+
+### Deploy to Digital Ocean via Terraform
+Run the following commands to initialize Terraform, review the infrastructure changes, and apply them:
+```bash
+terraform init  
+terraform plan  
+terraform apply
+```
+On success, terraform will return you the freshly created droplet's IP.
+
+SSH into your droplet using the password that DO will send you via email. Follow the initial password-change procedure and then check if the deployment was successful, by running:
+```bash
+tail -f /var/log/cloud-init-output.log
+```
+
+Additionaly, you can check if your docker instance is running and if there are any errors in the logs:
+
+```bash
+docker ps
+# will return a running instance if there was no problem
+
+docker logs _replace_with_your_instance_id_ -f
+# will follow on any logs for the instance
+```
+
+### Install and Configure ollama
+Above we have configured anyhting-llm to use [Ollama](https://github.com/ollama/ollama) as our LLM provider. I have chosen this since it is free and open source, and also relatively easy to setup. 
+
+To install Ollama on your DO droplet, SSH into your droplet and run:
+```bash
+cd ~
+curl -fsSL https://ollama.com/install.sh | sh
+```
+
+Verify Installation:
+```bash
+ollama -v
+ollama version is 0.3.0
+```
+
+Configure Ollama to be accessible for anyhting-llm:
+This guide has been taken from [Ollama faq](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server).
+1. Edit the systemd service by calling systemctl edit ollama.service. This will open an editor.
+2. Add a line Environment under section [Service]:
+```bash
+[Service]
+Environment="OLLAMA_HOST=0.0.0.0"
+```
+3. Save and exit.
+4. Reload systemd and restart Ollama:
+```bash
+systemctl daemon-reload
+systemctl restart ollama
+```
+
+Check if your ollama provider is accesible with telnet, from another terminal session:
+```bash
+telnet \<droplet-ip\> 11434
+```
+
+Install language model with ollama:
+```bash
+ollama pull llama3.1 
+# since we have specified llama3.1. You can chose anything you want.
+```
+
+
+### Login to your anything-llm application
+Navigate with your browser to \<droplet-ip\>:3001 and login with your application password (check your .env for AUTH_TOKEN)
+Go to `http://\<droplet-ip\>:3001/settings/llm-preference` and verify that it looks like this:
+
+![alt text](img/ollama-llm-preference.png)
+
+
+
+That's it! You can create a new workspace now and chat with llama3.1!
