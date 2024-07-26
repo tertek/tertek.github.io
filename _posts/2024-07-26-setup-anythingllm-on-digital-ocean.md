@@ -93,7 +93,7 @@ docker logs _replace_with_your_instance_id_ -f
 # will follow on any logs for the instance
 ```
 
-### Install and Configure ollama
+### Install and Configure Ollama
 Above we have configured anyhting-llm to use [Ollama](https://github.com/ollama/ollama) as our LLM provider. I have chosen this since it is free and open source, and also relatively easy to setup. 
 
 To install Ollama on your DO droplet, SSH into your droplet and run:
@@ -109,7 +109,8 @@ ollama version is 0.3.0
 ```
 
 Configure Ollama to be accessible for anyhting-llm:
-This guide has been taken from [Ollama faq](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server).
+
+This guide has been taken from [Ollama FAQ](https://github.com/ollama/ollama/blob/main/docs/faq.md#how-do-i-configure-ollama-server).
 1. Edit the systemd service by calling systemctl edit ollama.service. This will open an editor.
 2. Add a line Environment under section [Service]:
 ```bash
@@ -137,9 +138,10 @@ ollama pull llama3.1
 
 ### Login to your anything-llm application
 Navigate with your browser to \<droplet-ip\>:3001 and login with your application password (check your .env for AUTH_TOKEN)
+
 Go to `http://\<droplet-ip\>:3001/settings/llm-preference` and verify that it looks like this:
 
-![alt text](img/ollama-llm-preference.png)
+![ollama llm preference in anythingllm](img/ollama-llm-preference.png)
 
 
 
