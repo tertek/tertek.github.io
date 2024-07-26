@@ -1,5 +1,5 @@
 ---
-tags: bash,cli,yaml
+tags: bash
 ---
 ## Build CLI with Bash using bashly
 

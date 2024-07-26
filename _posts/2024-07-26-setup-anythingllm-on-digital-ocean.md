@@ -124,11 +124,6 @@ systemctl daemon-reload
 systemctl restart ollama
 ```
 
-Check if your ollama provider is accesible with telnet, from another terminal session:
-```bash
-telnet \<droplet-ip\> 11434
-```
-
 Install language model with ollama:
 ```bash
 ollama pull llama3.1 
@@ -139,9 +134,9 @@ ollama pull llama3.1
 ### Login to your anything-llm application
 Navigate with your browser to \<droplet-ip\>:3001 and login with your application password (check your .env for AUTH_TOKEN)
 
-Go to `http://\<droplet-ip\>:3001/settings/llm-preference` and verify that it looks like this:
+Go to `http://<droplet-ip>:3001/settings/llm-preference` and verify that it looks like this:
 
-![ollama llm preference in anythingllm](img/ollama-llm-preference.png)
+![ollama llm preference in anythingllm](/img/ollama-llm-preference.png)
 
 
 
