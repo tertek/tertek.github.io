@@ -1,11 +1,13 @@
 ---
 tags: llm, digital ocean,
 ---
-## Setup AnythingLLM on Digital Ocean
+## Setup AnythingLLM on Digital Ocean with HTTPS
 
 Open Source AI and LLMs are the path forward, as also recently [a famously infamous company has declared](https://about.fb.com/news/2024/07/open-source-ai-is-the-path-forward/). Therefore I checked out some of the available Open Source projects and stumbled upon [AnythingLLM](https://anythingllm.com/). What I like about it is that you can plug-in any LLM, you can run it on a server, access it through a web frontend and - this is super nice - it supports multiple users!
 
 This is why I decided to setup a demo instance on Digital Ocean and test it. Although the community has added several cloud deployment setups, the whole process is not fully documented and that is why I am sharing this guide. I hope it saves you some time in case you also want to spin up a droplet and share it with some co-workers - without wasting energy on configuration.
+
+Check the bonus section to enable HTTPS.
 
 ---
 ### Requirements
@@ -141,3 +143,92 @@ Go to `http://<droplet-ip>:3001/settings/llm-preference` and verify that it look
 
 
 That's it! You can create a new workspace now and chat with llama3.1!
+
+## BONUS 1: Setup wildcard DNS for your droplet IP
+In order to make your application more accessible, you can setup a wildcard DNS instead of using the droplet IP address.
+There are multiple free providers in the web, such as [nip.io](https://nip.io/).
+
+Login to Digital Ocean Cloud:
+
+1. Copy your droplet IP address, e.g. 116.203.255.68
+2. Go to "Networking" under Manage and choose the "Domains" tab
+3. Enter the droplet IP + nip.io suffix, e.g. 116.203.255.68.nip.io, www.116.203.255.68.nip.io
+4. Select the project with the droplet and add domain
+
+Your anything-llm application should soon be accessible at http://%ip-to-your-droplet%.nip.io:3001/
+
+## BONUS 2: Enable HTTPS for anything-llm
+Pre-Requirement: You need a working domain to request a SSL certificate. See Bonus 1 to setup a wildcard DNS.
+
+To setup HTTPs, we will need to spin up a webserver, configure proxy-forwarding and install the SSL certificate. The certificate can be obtained with certbot (Let's Encrypt).
+
+### Install nginx
+
+```
+sudo apt update
+sudo apt install nginx
+```
+
+### Configure nginx
+Delete the default configuration and create a new configuration file for your droplet's domain, e.g. 116.203.255.68.nip.io
+
+```
+sudo rm /etc/nginx/sites-enabled/default
+sudo touch /etc/nginx/conf.d/116.203.255.68.nip.io.conf
+sudo nano /etc/nginx/conf.d/116.203.255.68.nip.io.conf
+```
+
+The file confiugres nginx to run as a proxy server, by forwarding port 80 to 3001, where anything-llm is served through docker.
+```
+server {    
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    server_name 116.203.255.68.nip.io;
+
+    location / {
+        proxy_pass  http://127.0.0.1:3001/;
+    }
+}
+```
+
+### Install certbot
+Certbot is a tool to obtain SSL certificates and can be installed with python.
+
+```
+sudo apt update
+sudo apt install python3 python3-venv libaugeas0
+sudo apt-get install python3-certbot-nginx
+
+sudo python3 -m venv /opt/certbot/
+sudo /opt/certbot/bin/pip install --upgrade pip
+
+sudo /opt/certbot/bin/pip install certbot
+
+sudo ln -s /opt/certbot/bin/certbot /usr/bin/certbot
+```
+
+### Run certbot
+Finally, to obtain the certificate run certbot in nginx mode using your droplet domain.
+Certbot will also automatically configure nginx for your domain. It is important that the domain name is identical with the one used in .conf file.
+```
+sudo certbot --nginx -d 116.203.255.68.nip.io
+```
+
+### Allow https through firewall (if enabled)
+In case your droplet has a firewall installed, allow HTTPS on port 443.
+```
+    sudo ufw allow 'Nginx Full'
+    sudo ufw delete allow 'Nginx HTTP'
+```
+
+### Automatically renewal
+Finally, add a cronjob to automatically renew your SSL certificate
+
+```
+crontab -e
+```
+
+Use nano or anothe editor to enter following content.
+```
+0 12 * * * /usr/bin/certbot renew --quiet
+```
