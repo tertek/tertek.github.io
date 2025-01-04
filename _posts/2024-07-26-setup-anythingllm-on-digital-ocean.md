@@ -1,7 +1,7 @@
 ---
 tags: llm, digital ocean,
 ---
-## Setup AnythingLLM on Digital Ocean with HTTPS
+## Setup AnythingLLM on Digital Ocean
 
 Open Source AI and LLMs are the path forward, as also recently [a famously infamous company has declared](https://about.fb.com/news/2024/07/open-source-ai-is-the-path-forward/). Therefore I checked out some of the available Open Source projects and stumbled upon [AnythingLLM](https://anythingllm.com/). What I like about it is that you can plug-in any LLM, you can run it on a server, access it through a web frontend and - this is super nice - it supports multiple users!
 
