@@ -1,7 +1,7 @@
 #jekyll theme by https://github.com/chadbaldwin/chadbaldwin.github.io
 title: "tertek's blog"
 author: "Ekin Tertemiz"
-description: "A simple blog about mostly code related stuff I come across during my work." # This will show up in places like twitter, linkedin, etc, if you share your sites url as a post.
+description: "Welcome to my personal blog about code and other stuff." # This will show up in places like twitter, linkedin, etc, if you share your sites url as a post.
 
 # Email / Social media user names used by the minima theme:
 # All of these are optional and can be removed or commented out
@@ -26,7 +26,7 @@ rss: rss
 kramdown:
   syntax_highlighter_opts:
     disable: true
-    
+
 plugins:
   - jekyll-feed
   - jekyll-sitemap
