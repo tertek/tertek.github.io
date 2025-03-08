@@ -12,15 +12,15 @@ There are many alternative VS Code Extensions available that generate commit mes
 
 The extension works with different LLMs. The easiest way to setup is with Ollama.
 
-1. Download and install Ollama
+**Download and install Ollama**
 
 `curl -fsSL https://ollama.com/install.sh | sh`
 
-2. Run model 'mistral'
+**Run model 'mistral'**
 
 `ollama run mistral`
 
-3. Download and enable Ai Commit Messege extension
+**Download and enable Ai Commit Messege extension**
 
 ```bahs
     # In VS Codium
@@ -28,7 +28,7 @@ The extension works with different LLMs. The easiest way to setup is with Ollama
     ext install Its-Satyajit.ai-commit-messege
 ```
 
-4. Configure Ai Commit Messege to use mode mistral
+**Configure Ai Commit Messege to use mode mistral**
 
 ```json
 
