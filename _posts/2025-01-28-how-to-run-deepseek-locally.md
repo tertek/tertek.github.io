@@ -1,5 +1,5 @@
 ---
-tags: deepseek, locally, open source, llm
+tags: deepseek local-llm
 ---
 
 ## How to run DeepSeek locally

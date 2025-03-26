@@ -1,5 +1,5 @@
 ---
-tags: popos,mds
+tags: pop-os security
 ---
 
 ## How to mitigate MDS and disable SMT in POP!\_OS

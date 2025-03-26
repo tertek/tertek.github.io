@@ -1,5 +1,5 @@
 ---
-tags: local,llm, commit messages, vscode, codium, commit sage
+tags: local-llm codium
 ---
 
 ## Generate commit messages with local LLMs

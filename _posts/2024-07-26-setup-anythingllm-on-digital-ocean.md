@@ -1,5 +1,5 @@
 ---
-tags: llm, digital ocean,
+tags: digital-ocean local-llm
 ---
 ## Setup AnythingLLM on Digital Ocean
 
