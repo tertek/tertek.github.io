@@ -24,7 +24,7 @@ Next you will need to install and configure the extensions to use with VS Code o
 
 Since Commit Sage is not (yet) available in the Codium extension repository, you will have to download and install it manually.
 
-1. Download latest released .vsix from repository
+#### Download latest released .vsix from repository
 
 Go to [Commit Sage release page](https://github.com/VizzleTF/CommitSage/releases) and download the latest .vsix file. 
 At time of writing this blog post latest version is 2.2.10 and you can get it with:
@@ -33,7 +33,7 @@ At time of writing this blog post latest version is 2.2.10 and you can get it wi
 wget https://github.com/VizzleTF/CommitSage/releases/download/v2.2.10/geminicommit-2.2.10.vsix
 ```
 
-2. Install the extension in VS Codium
+#### Install the extension in VS Codium
 
 Assuming you have Codium on your system you can run the following command (adjusted to your extensions's version) to install the extension:
 
@@ -42,7 +42,7 @@ codium --install-extension geminicommit-2.2.9.vsix
 
 ```
 
-3. Configure Commit Sage to use Ollama with qwen2.5:3b model
+#### Configure Commit Sage to use Ollama with qwen2.5:3b model
 
 First make sure to have qwen2.5:3b model available. This model is relatively small but performs quick and well for the commit message task. Pull it with:
 
@@ -61,7 +61,7 @@ Next, open VS Codium and go to extension where you will find Commit sage. Naviga
     "commitSage.commit.commitFormat": "emoji-karma"
 ```
 
-4. Generate commit message with Commit Sage
+#### Generate commit message with Commit Sage
 
 Do your changes and stage them. In the Source Control view you will see a magic hut between the "Commit" and "Refresh" icons.
 
@@ -88,7 +88,7 @@ More information can be found [on Github](https://github.com/VizzleTF/CommitSage
 
 ### Setup Ai Commit Messege with VS Codium
 
-1. Download and enable Ai Commit Messege extension
+#### Download and enable Ai Commit Messege extension
 
 ```bahs
     # In VS Codium
@@ -96,7 +96,7 @@ More information can be found [on Github](https://github.com/VizzleTF/CommitSage
     ext install Its-Satyajit.ai-commit-messege
 ```
 
-2. Configure Ai Commit Messege to use qwen2.5:3b model
+#### Configure Ai Commit Messege to use qwen2.5:3b model
 
 ```json
 
@@ -117,7 +117,7 @@ More information can be found [on Github](https://github.com/VizzleTF/CommitSage
 
 ```
 
-3. Adjust the emojis you would like to use. 
+#### Adjust the emojis you would like to use. 
 
 I chose the emojis from  [gitmoji](https://gitmoji.dev/) but feel free to use whatever you feel like.
 
