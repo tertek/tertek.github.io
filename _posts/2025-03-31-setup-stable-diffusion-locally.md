@@ -188,3 +188,5 @@ Only run this command after you have succesfully edited the config. If you have 
 Congrats! You can now navigate to http://127.0.0.1:7860/ (or the browser may open from itself) and use Stable Diffusion from your browser.
 
 ![Stable Diffusion Web UI](/img/stable-diffusion/stable-diffusion-web-ui.png)
+
+Next, you can check out [SD WEB UI features](https://github.com/AUTOMATIC1111/stable-diffusion-webui/wiki/Features) to see what is possible.
