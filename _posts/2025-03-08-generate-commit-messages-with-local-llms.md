@@ -4,7 +4,7 @@ tags: local-llm codium
 
 ## Generate commit messages with local LLMs
 
-If you are using VS Code you may have already heard or used [Github Co-Pilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) that comes with a lot of features. One super useful feature as I find, is the ability to generate Commits Messages based on your staged file changes. Of course this comes with a huge trade-off, as all Cloud-AI usage.
+If you are using VS Code you may have already heart or used [Github Co-Pilot](https://marketplace.visualstudio.com/items?itemName=GitHub.copilot) that comes with a lot of features. One super useful feature as I find, is the ability to generate Commits Messages based on your staged file changes. Of course this comes with a huge trade-off, as all Cloud-AI usage.
 
 Since I have switched from VS Code to its more privacy-friendly cousin [VS Codium](https://vscodium.com/) there is no Github Co-Pilot available. So I had a look at privacy-friendly alternatives and found a way that works for me.
 
