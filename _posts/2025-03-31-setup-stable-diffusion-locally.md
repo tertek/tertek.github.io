@@ -27,7 +27,7 @@ Since installing and setting up CUDA on your machine can be challenging, I am go
 
 Depending on your Operating System and Graphic Card you will need to target the fitting CUDA version. The easiest way to find out is as follows:
 
-Check the PyTorch matrix to find out the latest supported CUDA versions. The PyTorch Matrix can be found on their website and allows to select your requirements. In this guide we will chose Linux with Python.
+Check the PyTorch matrix to find out the latest supported CUDA versions. The PyTorch Matrix can be found on their [website](https://pytorch.org/) and allows to select your requirements. In this guide we will chose Linux with Python.
 
 ![PyTorch Matrix](/img/stable-diffusion/pytorch-matrix.png)
 
@@ -50,7 +50,7 @@ In this case we are running Ubuntu 24.04 on x86_64 architecture. Now that we kno
 
 ![NVIDIA CUDA Matrix](/img/stable-diffusion/nvidia-cuda-matrix.png)
 
-As we can see, CUDA 12.6 is available for Ubuntu 24.06 - yeay! If this would not be the case, we would will need to check the CUDA Matrix for versions 12.4 and then 11.8.
+As we can see, CUDA 12.6 is available for Ubuntu 24.06 - yeay! If this would not be the case, we will need to check the CUDA Matrix for versions 12.4 and then 11.8.
 
 #### Install CUDA Toolkit
 
@@ -96,7 +96,7 @@ nvidia-smi
 
 ### Install Stable-Diffusion-Web-UI
 
-we will use the automatic installation approach, that will pull all required dependencies and spin up the local webserver for the UI. The following are condensed and improved instructions from the [original documentation for automatic install on Linux](https://github.com/AUTOMATIC1111/stable-diffusion-webui?tab=readme-ov-file#automatic-installation-on-linux. Since we setup CUDA for Linux, let's continue on the same basis (Debian based, Ubuntu 24.04). 
+We will use the automatic installation approach, that will pull all required dependencies and spin up the local webserver for the UI. The following are condensed and improved instructions from the [original documentation for automatic install on Linux](https://github.com/AUTOMATIC1111/stable-diffusion-webui?tab=readme-ov-file#automatic-installation-on-linux). Since we setup CUDA for Linux, let's continue on the same basis (Debian based, Ubuntu 24.04). 
 
 #### Install OS dependencies
 
