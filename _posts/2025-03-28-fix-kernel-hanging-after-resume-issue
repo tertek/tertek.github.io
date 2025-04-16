@@ -1,0 +1,15 @@
+---
+tags: kernel
+---
+
+# Fix Kernel hanging after resume issue
+
+This is a very specific quick fix for those who are having issues with the supsend/sleep in recent Linux Kernels. The issue seems to be related to a bug with Active Power Statemanagement and Bluetooth.
+A search in Kernel bugs shows quite some cases: https://bugzilla.kernel.org/buglist.cgi?quicksearch=sleep
+
+
+- https://www.google.com/search?client=ubuntu-sn&channel=fs&q=pm+failed+to+resume+async+error
+
+- https://www.reddit.com/r/Ubuntu/comments/1g1ye5o/2410_black_screenfreeze_when_resuming_from_sleep/?rdt=56691
+- https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/6/html/power_management_guide/aspm#ASPM
+- https://askubuntu.com/questions/1412336/kernel-hang-on-resume-from-suspend-on-ubuntu-22-04
