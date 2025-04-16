@@ -22,7 +22,6 @@ title: tertek's blog
 author: "Ekin Tertemiz"
 description: "A personal blog about code and other stuff."
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "tertek.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  tertek
 
 # Build settings
@@ -31,11 +30,6 @@ plugins:
   - jekyll-feed
   - jekyll-sitemap
 rss: rss  
-
-highlighter: rouge
-kramdown:
-  math_engine: mathjax
-  syntax_highlighter: rouge
 
 titles_from_headings:
   strip_title: true
@@ -49,6 +43,8 @@ defaults:
       tags: Other
 
 
+
+show_excerpts: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

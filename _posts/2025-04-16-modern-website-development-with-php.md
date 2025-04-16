@@ -2,7 +2,7 @@
 tags: php
 ---
 
-# Modern PHP website development in 2025
+# Modern website development with PHP
 
 This is a guide on modern PHP website development. Not always you will need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
@@ -122,7 +122,7 @@ Additionally, you can adjust your `package.json` with a `script` tag:
 ```json
   "scripts": {
     "dev": "npx mix"
-  },
+  }
 ```
 
 This will allow you to run mix with `ddev npm run dev`.
