@@ -23,6 +23,7 @@ author: "Ekin Tertemiz"
 description: "A personal blog about code and other stuff."
 baseurl: "" # the subpath of your site, e.g. /blog
 github_username:  tertek
+enable_comments: true
 
 # Build settings
 theme: minima
