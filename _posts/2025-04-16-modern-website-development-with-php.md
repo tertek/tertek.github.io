@@ -46,15 +46,15 @@ That's it. Now you are ready to setup your developement template.
 
 ## Setup your website template
 
-One of the most important development principle is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for steps between multiple projects. That is why it makes sense to setup your development templates, in case you are working on projects that do not require a framework and are similar to each other.
+One of the most important development principle is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for the activities between multiple projects. That is why it makes sense to setup your development templates, in case you are working on projects that do not require a framework and are similar to each other.
 
-An example for such a case could be the development of dynamically rendered websites that consume a decoupled [headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. So what is needed is a solid base that will take over the data pulling, routing the data to a view, where it will be rendered using a template engine and finally bundleded with a modern CSS library. 
+An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. So what is needed is a solid base that will take over the data pulling, routing the data to a view, where it will be rendered using a template engine and finally bundled with a modern CSS library. 
 
-Of course you could go directly with a framework such as Laravel or Slim, but what if you really only want to use the bare minimum without all the other useful but unnecessary stuff in this case? This guide will specifically focus on using framework-level components to build a minimal and lightweight website.
+Of course you could go directly with a framework such as Laravel or Slim, but what if you really only want to use the bare minimum without all the other useful - but unnecessary stuff in this case? This guide will specifically focus on using framework-level components to build a minimal and lightweight website.
 
 In most cases, the only thing that changes from project to project, is the data structure and design of the views, which means the whole skeleton of the website can be reused.
 
-This guide will show an example of builing such a reusable modern PHP development template, based on a DDEV development environment, [Illuminate classes](https://github.com/illuminate) and [TailwindCSS](https://tailwindcss.com/) frontend library.
+This guide will show an example of builing such a reusable modern PHP development template, based on a DDEV development environment, standard PHP components and [TailwindCSS](https://tailwindcss.com/) frontend library.
 
 ### 1. Create a generic PHP project with ddev
 
@@ -80,16 +80,16 @@ Your project structure should allow to bundle resources into a public directory 
 ```bash
 - .ddev # configuration file for ddev, created with `ddev config`
 - package.json # configuration file for composer, created with `composer init`
-- public # will be used to serve bundleded resourced
-- resources # is the source to be bundldeded
--- css/app.css
--- js/app.js
+- public # will be used to serve bundled resourced
+- resources # is the source to be bundled
+-- css/app.css # entrypoint for styles
+-- js/app.js # entrypoint for scripts
 - index.php # entry point of the website
 ```
 
 ### 3. Setup TailwindCSS with Laravel Mix
 
-Original Source: [Install Tailwind CSS with Laravel - Tailwind CSS](https://tailwindcss.com/docs/installation/framework-guides/laravel/mix)
+The installation of TailwindCSS can be achieved easily when we use Laravel Mix as a helper above Webpack. You could also Vite, but it is a bit more cumbersome to setup with PostCSS (we want to use CSS and not SCSS). The following is an alignment to ddev of the official documentation to [Install Tailwind CSS with Laravel - Tailwind CSS + Laravel Mix](https://tailwindcss.com/docs/installation/framework-guides/laravel/mix).
 
 ```bash
 ddev npm install tailwindcss @tailwindcss/postcss postcss
@@ -146,10 +146,5 @@ Finally, load your assets into your `index.php`:
 </html>
 ```
 
-### 4. Setup Views and Routing
-
-There are many template engines out there, such as Twig. But why not stick to something that you allready may use with bigger projects, such as Laravel Blade? It is possible to use Laravel views outside of the framework, since they are based in Illuminate classes.
-
-The [Torch project ](https://github.com/mattstauffer/Torch/tree/master)is a very helpful guide on how to use Illuminate classes outisde of Laravel. We would like to have functionalities of Views and Routing. 
 
 **This guide is work in progress and will be updated within the next time.**
