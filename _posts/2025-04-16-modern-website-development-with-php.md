@@ -170,11 +170,19 @@ Now that we have the basic structure of our framework ready, let's run it and se
 
 The installation of TailwindCSS can be achieved easily when we use Laravel Mix as a helper above Webpack. You could also Vite, but it is a bit more cumbersome to setup with PostCSS (we want to use CSS and not SCSS). The following is an alignment to ddev of the official documentation to [Install Tailwind CSS with Laravel - Tailwind CSS + Laravel Mix](https://tailwindcss.com/docs/installation/framework-guides/laravel/mix).
 
+First, install Laravel Mix:
+
+```bash
+npm install laravel-mix --save-dev
+```
+
+Then, install TailwindCSS resources with PostCSS loader for Tailwind:
+
 ```bash
 ddev npm install tailwindcss @tailwindcss/postcss postcss
 ```
 
-Add in your `webpack.mix.js` 
+Create a new file `webpack.mix.js` and configure it as follows:
 
 ```js
 mix
@@ -184,10 +192,15 @@ mix
   ]);
 ```
 
-Add in your `/resources/css/app.css`
+Create a new file `/resources/css/app.css` and insert:
 
 ```css
 @import "tailwindcss";
+```
+
+Create a new file `/resources/js/app.js` and insert:
+```javascript
+console.log('App is ready!')
 ```
 
 Compile the assets by running mix:
@@ -209,6 +222,8 @@ This will allow you to run mix with `ddev npm run dev`.
 Finally, load your assets into your page at `pages/home.php`:
 
 ```html
+<?php
+?>
 <!doctype html>
 <html>
 <head>
@@ -225,4 +240,4 @@ Finally, load your assets into your page at `pages/home.php`:
 </html>
 ```
 
-**This guide is work in progress and will be updated within the next time.**
+**WIP**
