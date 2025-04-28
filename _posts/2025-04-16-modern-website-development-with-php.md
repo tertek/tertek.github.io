@@ -3,10 +3,9 @@ tags: php
 ---
 
 # Modern website development with PHP
-
 This is a guide on modern PHP website development. Not always you will need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
-While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. This guide covers the bare minimum with setting up your development environment, building your own **website template** and finally reusing this for your projects.
+While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. This guide covers the bare minimum with setting up your development environment, building your own **minimal framework** and finally reusing this for your projects.
 
 ## Requirements
 
@@ -42,19 +41,30 @@ curl -fsSL https://ddev.com/install.sh | bash
 # https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/#linux
 ```
 
-That's it. Now you are ready to setup your developement template.
+That's it. Now you are ready to create your own framework.
 
-## Setup your website template
+## Create your framework
 
-One of the most important development principle is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for the activities between multiple projects. That is why it makes sense to setup your development templates, in case you are working on projects that do not require a framework and are similar to each other.
+One of the most important development principle is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for the activities between multiple projects. That is why it makes sense to create your own framework, in case you are working on projects that do not require a feature-rich framework.
 
-An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. So what is needed is a solid base that will take over the data pulling, routing the data to a view, where it will be rendered using a template engine and finally bundled with a modern CSS library. 
+An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. 
+g [Smyfony packages](https://symfony.com/) and modern s
 
-Of course you could go directly with a framework such as Laravel or Slim, but what if you really only want to use the bare minimum without all the other useful - but unnecessary stuff in this case? This guide will specifically focus on using framework-level components to build a minimal and lightweight website.
+Of course you could go directly with a framework such as Laravel or Slim, but what if you really only want to use the bare minimum without all the other useful - but unnecessary stuff in this case? This guide will specifically focus on using essential components to build a minimal and lightweight framework.
 
-In most cases, the only thing that changes from project to project, is the data structure and design of the views, which means the whole skeleton of the website can be reused.
+The following is an opinionated minimal selection of features for a decoupled modern website:
+- Pulls data of variable structure from external sources and renders the content dynamically on different pages
+- Displays data in reusable views using modern style and layout standards
+- Supports multilingual content
+- Supports form submissions 
 
-This guide will show an example of builing such a reusable modern PHP development template, based on a DDEV development environment, standard PHP components and [TailwindCSS](https://tailwindcss.com/) frontend library.
+To achieve above features, following components would be essential as part of our framework:
+- Frontcontroller: Handles the request and response
+- Data Mapper: Maps external data sources to the actual website's context
+- Router: Maps URLs to what is rendered as response
+- Template Engine: Build your views with reusable components and layouts, handling data with more readable syntax
+
+This guide will show an example of builing our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/).
 
 ### 1. Create a generic PHP project with ddev
 
@@ -63,10 +73,11 @@ Create a project directory and then run ddev inside the directory. We will need 
 ```bash
 mkdir developement-template
 cd developement-template
-ddev config --project-type=generic --omit-containers=db,ddev-ssh-agent
+ddev config --project-type=generic --omit-containers=db,ddev-ssh-agent --webserver-type=apache-fpm
 ```
+The `ddev config` commands initiates a new ddev environment that can be managed through a configuration file at `/.ddev/config.yaml`. We are passing 3 arguments with the command that preconfigure during project creation. `--project-type=generic` will only include minimal required files for a generic PHP project (ddev also supports boilerplate for frameworks such as Laravel or Symfony). `--omit-containers=db,ddev-ssh-agent` removes unnececassry containers from the docker compose, since we do not need a database and also not an SSH agent for small projects. Finally, `--webserver-type=apache-fpm` changes the webserver type from nginx to apache, because the latter is easier to configure through `.htaccess` files on shared hostings, which is often the deployment case for simple project that only display content.
 
-### 2. Create project structure
+### 2. Initiate project
 
 Before starting, let's initiate composer:
 
@@ -75,17 +86,14 @@ ddev composer init
 # follow and respond to the interactive dialog to your needs
 ```
 
-Your project structure should allow to bundle resources into a public directory where they will be served. In general it makes sense to be inspired by structures of popular frameworks. If one of the following directories or files is missing, simply add it to your project:
+Next create the following directory structure:
 
 ```bash
-- .ddev # configuration file for ddev, created with `ddev config`
-- package.json # configuration file for composer, created with `composer init`
-- public # will be used to serve bundled resourced
-- resources # is the source to be bundled
--- css/app.css # entrypoint for styles
--- js/app.js # entrypoint for scripts
-- index.php # entry point of the website
+- bootstrap
+- pages
+- public
 ```
+
 
 ### 3. Setup TailwindCSS with Laravel Mix
 
