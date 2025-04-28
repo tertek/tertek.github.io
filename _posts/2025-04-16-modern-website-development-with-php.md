@@ -48,23 +48,22 @@ That's it. Now you are ready to create your own framework.
 One of the most important development principle is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for the activities between multiple projects. That is why it makes sense to create your own framework, in case you are working on projects that do not require a feature-rich framework.
 
 An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. 
-g [Smyfony packages](https://symfony.com/) and modern s
 
 Of course you could go directly with a framework such as Laravel or Slim, but what if you really only want to use the bare minimum without all the other useful - but unnecessary stuff in this case? This guide will specifically focus on using essential components to build a minimal and lightweight framework.
 
-The following is an opinionated minimal selection of features for a decoupled modern website:
+The following is an opinionated minimal list of features for a (decoupled) modern website:
 - Pulls data of variable structure from external sources and renders the content dynamically on different pages
 - Displays data in reusable views using modern style and layout standards
 - Supports multilingual content
 - Supports form submissions 
 
 To achieve above features, following components would be essential as part of our framework:
-- Frontcontroller: Handles the request and response
-- Data Mapper: Maps external data sources to the actual website's context
-- Router: Maps URLs to what is rendered as response
-- Template Engine: Build your views with reusable components and layouts, handling data with more readable syntax
+- Front Controller: Handles request and response, may be extended by middleware.
+- Data Mapper: Helpts to pull external data sources and bind them to the actual website's context.
+- Router: Handles which content is shown for each request and response.
+- Template Engine: Display your content through views with reusable components and layouts, using more readable syntax.
 
-This guide will show an example of builing our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/).
+This guide will provide an example of builing our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/). The final project can be found in a Github repository [tertek/new-php-framework](https://github.com/tertek/new-php-framework).
 
 ### 1. Create a generic PHP project with ddev
 
