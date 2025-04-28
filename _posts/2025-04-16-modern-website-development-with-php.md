@@ -77,6 +77,20 @@ ddev config --project-name=new-php-framework --project-type=generic --omit-conta
 ```
 The `ddev config` command configures a new ddev environment that can be managed through a configuration file at `/.ddev/config.yaml`. We are passing some flags with the command that sets the configuration on the fly: `--project-name=new-php-framework` provides the project name of project to configure which should be the same as the directory name. `--project-type=generic` will only include minimal required files for a generic PHP project (ddev also supports boilerplate for frameworks such as Laravel or Symfony). `--omit-containers=db,ddev-ssh-agent` removes containers from the docker compose, since we do not need a database and also not an SSH agent for small projects. Finally, `--webserver-type=apache-fpm` changes the webserver type from default Nginx to Apache, because the latter is easier to configure through `.htaccess` files on shared hostings, which is often the preferred deployment option for simple website projects (but feel free to stay with Nginx if it makes more sense for you).
 
+Once, you have run above command and everything went through, you should receive the following confirmation from ddev:
+
+```bash
+Creating a new DDEV project config in the current directory (/home/tertek/projects/new-php-framework) 
+Once completed, your configuration will be written to /home/tertek/projects/new-php-framework/.ddev/config.yaml
+ 
+Configuring a 'generic' project named 'new-php-framework' with docroot '' at '/home/tertek/projects/new-php-framework'.
+For full details use 'ddev describe'. 
+Configuration complete. You may now run 'ddev start'. 
+
+```
+
+Before we start ddev, let's first add our essential framework structure.
+
 ### 2. Setup framework structure
 
 Before starting, let's initiate composer:
@@ -121,7 +135,9 @@ So to achieve this, we will add the following files, beginning with the entrypoi
 <?php
 
 // Register the Composer autoloader...
-require __DIR__ . '/../vendor/autoload.php';
+if(file_exists(__DIR__ . '/../vendor/autoload.php')) {
+    require __DIR__ . '/../vendor/autoload.php';
+}
 
 // Bootstrap DOA and handle the request...
 $app = require_once __DIR__ . '/../bootstrap/app.php';
@@ -134,7 +150,7 @@ $app = require_once __DIR__ . '/../bootstrap/app.php';
 <?php
 
 //  For the beginning we will only include a static home page
-include _DIR__ . '/../pages/home.php';
+include __DIR__ . '/../pages/home.php';
 
 ```
 
