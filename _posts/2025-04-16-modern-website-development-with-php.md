@@ -77,7 +77,7 @@ ddev config --project-type=generic --omit-containers=db,ddev-ssh-agent --webserv
 ```
 The `ddev config` commands initiates a new ddev environment that can be managed through a configuration file at `/.ddev/config.yaml`. We are passing 3 arguments with the command that preconfigure during project creation. `--project-type=generic` will only include minimal required files for a generic PHP project (ddev also supports boilerplate for frameworks such as Laravel or Symfony). `--omit-containers=db,ddev-ssh-agent` removes unnececassry containers from the docker compose, since we do not need a database and also not an SSH agent for small projects. Finally, `--webserver-type=apache-fpm` changes the webserver type from nginx to apache, because the latter is easier to configure through `.htaccess` files on shared hostings, which is often the deployment case for simple project that only display content.
 
-### 2. Initiate project
+### 2. Setup framework structure
 
 Before starting, let's initiate composer:
 
@@ -92,7 +92,63 @@ Next create the following directory structure:
 - bootstrap
 - pages
 - public
+- resources
 ```
+
+**bootstrap**: Includes everything we need to spin up our framework. Normally, is included as a file from `bootstrap/app.php` within `public/index.php`.
+
+**pages**: This is where our project specific pages will be included. The framework will understand that the data fetched has to be routed with the pages in this directory.
+
+**public**: Is the main entry point of our website and only publicly accessible resource on the webserver.
+
+**resources**: Here we will keep all files that are required for styling and scripting our pages, such as CSS, JavaScript, images and fonts.
+
+So to achieve this, we will add the following files, beginning with the entrypoint:
+
+`.htaccess`, rewriting the index of the webserver to `public/index.php`:
+
+```
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+```
+
+`public/index.php`, including composer autoloader and framework bootstrap file.
+
+```php
+<?php
+
+// Register the Composer autoloader...
+require __DIR__ . '/../vendor/autoload.php';
+
+// Bootstrap DOA and handle the request...
+$app = require_once __DIR__ . '/../bootstrap/app.php';
+
+```
+
+`bootstrap/app.php`, 
+
+```php
+<?php
+
+//  For the beginning we will only include a static home page
+include _DIR__ . '/../pages/home.php';
+
+```
+
+`pages/home.php`
+
+```php
+<?php
+
+echo 'Hello World';
+```
+
+Now that we have the basic structure of our framework ready, let's run it and see if it works:
+
+`ddev launch` will start ddev, build required containers and launch your project on your localhost. It will auto-configure your `etc/host` and create local urls as <project>.ddev.site. Navigating to the url should show you a plain page with a 'Hello World'.
 
 
 ### 3. Setup TailwindCSS with Laravel Mix
