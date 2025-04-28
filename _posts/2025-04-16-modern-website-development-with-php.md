@@ -68,14 +68,14 @@ This guide will show an example of builing our own framework, based on a DDEV de
 
 ### 1. Create a generic PHP project with ddev
 
-Create a project directory and then run ddev inside the directory. We will need a generic PHP project, without the use of database or SSH agent containers.
+Create a new project directory and name it as you want your framework to be called. Inside the directory run ddev config specified to our needs:
 
 ```bash
-mkdir developement-template
-cd developement-template
-ddev config --project-type=generic --omit-containers=db,ddev-ssh-agent --webserver-type=apache-fpm
+mkdir new-php-framework
+cd new-php-framework
+ddev config --project-name=new-php-framework --project-type=generic --omit-containers=db,ddev-ssh-agent --webserver-type=apache-fpm
 ```
-The `ddev config` commands initiates a new ddev environment that can be managed through a configuration file at `/.ddev/config.yaml`. We are passing 3 arguments with the command that preconfigure during project creation. `--project-type=generic` will only include minimal required files for a generic PHP project (ddev also supports boilerplate for frameworks such as Laravel or Symfony). `--omit-containers=db,ddev-ssh-agent` removes unnececassry containers from the docker compose, since we do not need a database and also not an SSH agent for small projects. Finally, `--webserver-type=apache-fpm` changes the webserver type from nginx to apache, because the latter is easier to configure through `.htaccess` files on shared hostings, which is often the deployment case for simple project that only display content.
+The `ddev config` command configures a new ddev environment that can be managed through a configuration file at `/.ddev/config.yaml`. We are passing some flags with the command that sets the configuration on the fly: `--project-name=new-php-framework` provides the project name of project to configure which should be the same as the directory name. `--project-type=generic` will only include minimal required files for a generic PHP project (ddev also supports boilerplate for frameworks such as Laravel or Symfony). `--omit-containers=db,ddev-ssh-agent` removes containers from the docker compose, since we do not need a database and also not an SSH agent for small projects. Finally, `--webserver-type=apache-fpm` changes the webserver type from default Nginx to Apache, because the latter is easier to configure through `.htaccess` files on shared hostings, which is often the preferred deployment option for simple website projects (but feel free to stay with Nginx if it makes more sense for you).
 
 ### 2. Setup framework structure
 
@@ -86,7 +86,7 @@ ddev composer init
 # follow and respond to the interactive dialog to your needs
 ```
 
-Next create the following directory structure:
+Next create the following directory structure in your directory root:
 
 ```bash
 - bootstrap
@@ -191,7 +191,7 @@ Additionally, you can adjust your `package.json` with a `script` tag:
 
 This will allow you to run mix with `ddev npm run dev`.
 
-Finally, load your assets into your `index.php`:
+Finally, load your assets into your page at `pages/home.php`:
 
 ```html
 <!doctype html>
@@ -209,6 +209,5 @@ Finally, load your assets into your `index.php`:
 </body>
 </html>
 ```
-
 
 **This guide is work in progress and will be updated within the next time.**
