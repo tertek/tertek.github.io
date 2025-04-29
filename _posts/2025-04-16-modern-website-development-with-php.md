@@ -11,23 +11,21 @@ While there are many PHP frameworks that help you to build cutting-edge web appl
 
 ## Requirements
 
-This guide assumes that you are using Linux and that you have installed necessary pre-requisites:
+It is assumed that you are using Linux and that you have installed necessary pre-requisites:
 
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/engine/install/)
 
 ## Setup Development Environment
 
-The classical approach to developing PHP websites on Windows or MacOS has always been using a tool that emulates a LEMP/LAMP environment, where PHP will run seamlessly. Well known tools are MAMP, XAMPP or Laragon. Since all of these tools have their different advantages and compatibilities, there was never a real winner between them. Another option is to use virtual machines or directly setup a webserver on install PHP on Linux. But since the virtualization through Docker has become much easier than ever, a more lightweight approach has been achieved for PHP Development. 
+The classical approach to developing PHP websites on Windows or MacOS has always been using a tool that emulates a LEMP/LAMP environment, where PHP will run seamlessly. Well known tools are MAMP, XAMPP or Laragon. Since all of these tools have their different advantages and compatibilities, there was never a real winner between them. Another option is to use virtual machines or to directly setup a webserver on barebones Linux. But since the virtualization through Docker has become much easier than ever, a more lightweight approach has been achieved for PHP Development. 
 
-These new tools are build upon Docker and abstract the whole docker handling away, enabling developers to focus on just spinning up the services that they need through simple CLI commands.
+These new tools are built upon Docker and abstract the whole container handling away, enabling developers to focus on just spinning up the services that they need through a simple CLI.
 
 Currently, most prominent tools that can be ussed accross PHP projects are:
 
 - [ddev](https://ddev.com/): Docker-based PHP development environments.
-
 - [lando](https://lando.dev): Instant dev environments for all your projects.
-
 - [docksal](https://docksal.io): All-purpose web-development environment based on Docker and Docker Compose. (MacOs)
 
 I chose ddev since it seems most straighforward to bootstrap a project and has a lightweight & well-documented CLI. Feel free to use any other tool though.
@@ -46,12 +44,12 @@ That's it. Now you are ready to build in containerized PHP.
 
 One of the most important development principles is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for activities between multiple projects. That is why it makes sense to create your own framework, in case you are working on projects that do not require a feature-rich framework.
 
-An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). In the best scenario an API  can be accessed through HTTP from the PHP Website providing authentication credentials. 
+An example for such a case could be the development of dynamically rendered websites that consume a decoupled [Headless CMS](https://en.wikipedia.org/wiki/Headless_content_management_system). 
 
-Of course you could go directly with a framework such as [Laravel](https://laravel.com/) or [Slim](https://www.slimframework.com/).However, what if you really only want to use the bare minimum - without all the other useful - but unnecessary stuff in this case? 
+Of course you could go directly with a framework such as [Laravel](https://laravel.com/) or [Slim](https://www.slimframework.com/). However, what if you really only want to use the bare minimum - without all the other useful - but unnecessary stuff in this case? 
 
 The following is an opinionated, minimal list of features for a (decoupled) modern website:
-- Pulls data of variable structure from external sources and renders the content dynamically on different pages
+- Pulls data of variable structure from external sources (API) and renders the content dynamically on different pages
 - Displays data in reusable views using modern style and layout standards
 - Supports multilingual content
 - Supports form submissions 
@@ -60,9 +58,9 @@ To achieve above features, following components would be essential as part of ou
 - Front Controller: Handles request and response, may be extended by middleware for additional features.
 - Data Mapper: Helps to pull external data sources and bind it to the actual website's context.
 - Router: Handles which content is shown for each request and response.
-- Template Engine: Displays your content through views with reusable components and layouts.
+- Template Engine: Displays your content through views with reusable components and layouts, adds chaching capabilities.
 
-In this example we will build our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/). The final project can be found in a Github repository [tertek/new-php-framework](https://github.com/tertek/new-php-framework).
+In this example we will build our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/). The final project can be found in this Github repository: [tertek/new-php-framework](https://github.com/tertek/new-php-framework).
 
 ### 1. Create a generic PHP project with ddev
 
