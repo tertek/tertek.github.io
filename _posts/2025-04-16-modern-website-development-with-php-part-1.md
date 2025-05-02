@@ -10,9 +10,9 @@ While there are many PHP frameworks that help you to build cutting-edge web appl
 
 This article is part of a series on modern PHP website development:
 
--**Part 1: Development environment and project structure**
--[Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
--[Part 3: Building Framework Components](#tbd)
+- **Part 1: Development environment, project structure and template engine**
+- [Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
+- [Part 3: Building Framework Components](#tbd)
 
 ## Requirements
 
@@ -159,8 +159,52 @@ Now that we have the basic structure of our framework ready, let's run it and se
 
 `ddev launch` will start ddev, build required containers and launch your project on your localhost. It will auto-configure your `etc/host` and create local urls as <project>.ddev.site. Navigating to the site's url should show you a plain page with a 'Hello World'.
 
+## Add a template engine
+
+Install Twig with Composer:
+```bash
+dev composer require "twig/twig:^3.0"
+```
+
+Remove `pages/home.php` because we will load all pages as Twig templates:
+```bash
+rm pages/home.php
+```
+
+Add a new `pages/home.twig`:
+```php
+<!doctype html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+    <h1>
+        Hello world
+    </h1>
+    </body>
+</html>
+```
+
+Add Twig environment and load Twig template for homepage in `bootstrap/app.php`:
+```php
+<?php
+use Twig\Loader\FilesystemLoader;
+use Twig\Environment;
+
+
+//  Create Twig loader and environment
+$loader = new FilesystemLoader( __DIR__ . '/../pages/');
+$twig = new Environment($loader);
+
+// Load Twig Template for Home page
+echo $twig->render('home.twig');
+```
+
+The result should be another 'Hello World' when you navigate to your site, but this time the content will be loaded from a Twig template.
 
 ### Next
 
 
-In the next part of this series we will integrate frontend libraries to the framework. 
+In the next part of this series we will integrate frontend built tools and libraries to the framework. 
