@@ -10,9 +10,9 @@ While there are many PHP frameworks that help you to build cutting-edge web appl
 
 This article is part of a series on modern PHP website development:
 
-**Part 1: Development environment and project structure**
-[Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
-[Part 3: Building Framework Components](#tbd)
+-**Part 1: Development environment and project structure**
+-[Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
+-[Part 3: Building Framework Components](#tbd)
 
 ## Requirements
 
@@ -68,7 +68,7 @@ To achieve above features, following components would be essential as part of ou
 
 In this example we will build our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/). The final project can be found in this Github repository: [tertek/new-php-framework](https://github.com/tertek/new-php-framework).
 
-### 1. Create a generic PHP project with ddev
+### Create a generic PHP project with ddev
 
 Create a new project directory and name it as you want your framework to be called. Inside the directory run ddev config specified to our needs:
 
@@ -93,7 +93,7 @@ Configuration complete. You may now run 'ddev start'.
 
 Before we start ddev, let's first add our essential framework structure.
 
-### 2. Setup framework structure
+### Setup framework structure
 
 The framework structure is essential because it defines how the different components *can* interact with each other. The structure is also critical when it comes to setup frontend libraries and get them running in a pipeline, that is enjoyable for the developers. The following steps begin to setup the major part of the framework structure, which will be extended over the next sections by component relevant parts.
 
@@ -163,4 +163,4 @@ Now that we have the basic structure of our framework ready, let's run it and se
 ### Next
 
 
-In the next part of this series we will integrate frontend libraries to the framework. Go to [Modern website development with PHP (Part 2)]().
+In the next part of this series we will integrate frontend libraries to the framework. 
