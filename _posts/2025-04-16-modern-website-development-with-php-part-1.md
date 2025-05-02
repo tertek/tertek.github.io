@@ -3,15 +3,21 @@ tags: php
 ---
 
 # Modern website development with PHP (Part 1)
-This is the first part of a guide on modern PHP website development. 
 
 Not always you will need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
 While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. This guide covers the bare minimum with setting up your development environment, building your own **minimal framework** and finally reusing this for your projects.
 
+This article is part of a series on modern PHP website development:
+
+**Part 1: Development environment and project structure**
+[Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
+[Part 3: Building Framework Components](#tbd)
+
 ## Requirements
 
 It is assumed that you are using Linux and that you have installed necessary pre-requisites:
+
 
 - [Git](https://git-scm.com/)
 - [Docker](https://docs.docker.com/engine/install/)
@@ -154,78 +160,7 @@ Now that we have the basic structure of our framework ready, let's run it and se
 `ddev launch` will start ddev, build required containers and launch your project on your localhost. It will auto-configure your `etc/host` and create local urls as <project>.ddev.site. Navigating to the site's url should show you a plain page with a 'Hello World'.
 
 
-### 3. Setup TailwindCSS with Laravel Mix
+### Next
 
-The installation of TailwindCSS can be achieved easily when we use Laravel Mix as a helper on top of Webpack. You could also use Vite, but it is a bit more cumbersome to setup with PostCSS (we want to use CSS and not SCSS). The following is an alignment to ddev from the official documentation at [Install Tailwind CSS with Laravel - Tailwind CSS + Laravel Mix](https://tailwindcss.com/docs/installation/framework-guides/laravel/mix).
 
-Install Laravel Mix:
-
-```bash
-npm install laravel-mix --save-dev
-```
-
-Then, install TailwindCSS resources with PostCSS loader for Tailwind:
-
-```bash
-ddev npm install tailwindcss @tailwindcss/postcss postcss
-```
-
-Create a new file `webpack.mix.js` and configure it as follows:
-
-```js
-mix
-  .js("resources/js/app.js", "public/js")
-  .postCss("resources/css/app.css", "public/css", [
-    require("@tailwindcss/postcss"),
-  ]);
-```
-
-Create a new file `/resources/css/app.css` and insert:
-
-```css
-@import "tailwindcss";
-```
-
-Create a new file `/resources/js/app.js` and insert:
-```javascript
-console.log('App is ready!')
-```
-
-Compile the assets by running mix:
-
-```bash
-ddev npx mix
-```
-
-Additionally, you can adjust your `package.json` with a `script` tag:
-
-```json
-  "scripts": {
-    "dev": "npx mix"
-  }
-```
-
-This will allow you to run mix with `ddev npm run dev`.
-
-Finally, load your assets into your page at `pages/home.php`:
-
-```html
-<?php
-?>
-<!doctype html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="/public/css/app.css" rel="stylesheet" type="text/css">
-</head>
-<body>
-  <h1 class="text-3xl font-bold underline">
-    Hello world!
-  </h1>
-  <script src="/public/js/app.js"></script>
-</body>
-</html>
-```
-
-**Work in prorgess**
+In the next part of this series we will integrate frontend libraries to the framework. Go to [Modern website development with PHP (Part 2)]().
