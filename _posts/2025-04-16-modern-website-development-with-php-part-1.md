@@ -6,47 +6,18 @@ tags: php
 
 Not always you will need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
-While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. This guide covers the bare minimum with setting up your development environment, building your own **minimal framework** and finally reusing this for your projects.
+While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. 
 
-This article is part of a series on modern PHP website development:
+This guide explains the bare minimum of setting up your development environment, integrating your necessary build tools and creating your own **minimal framework**.
 
-- **Part 1: Development environment, project structure and template engine**
-- [Part 2: Integrating Frontend Libraries for CSS and JavaScript](#tbd)
-- [Part 3: Building Framework Components](#tbd)
+The first part specifies the development objective and the defines the features of the framework we would like to achieve. Based on that, we will setup a docker-based modern development environment. Finally, in the last section of this part, we will define an initial project structure that will serve as a foundation of the framework to be created.
 
-## Requirements
-
-It is assumed that you are using Linux and that you have installed necessary pre-requisites:
+- **Part 1: Setting up development environment and project structure**
+- [Part 2: Integrating front-end build tools and libraries](#tbd)
+- [Part 3: Creating a component-based minimal framework](#tbd)
 
 
-- [Git](https://git-scm.com/)
-- [Docker](https://docs.docker.com/engine/install/)
-
-## Setup Development Environment
-
-The classical approach to developing PHP websites on Windows or MacOS has always been using a tool that emulates a LEMP/LAMP environment, where PHP will run seamlessly. Well known tools are MAMP, XAMPP or Laragon. Since all of these tools have their different advantages and compatibilities, there was never a real winner between them. Another option is to use virtual machines or to directly setup a webserver on barebones Linux. But since the virtualization through Docker has become much easier than ever, a more lightweight approach has been achieved for PHP Development. 
-
-These new tools are built upon Docker and abstract the whole container handling away, enabling developers to focus on just spinning up the services that they need through a simple CLI.
-
-Currently, most prominent tools that can be ussed accross PHP projects are:
-
-- [ddev](https://ddev.com/): Docker-based PHP development environments.
-- [lando](https://lando.dev): Instant dev environments for all your projects.
-- [docksal](https://docksal.io): All-purpose web-development environment based on Docker and Docker Compose. (MacOs)
-
-I chose ddev since it seems most straighforward to bootstrap a project and has a lightweight & well-documented CLI. Feel free to use any other tool though.
-
-A simple way to install ddev with the install script:
-
-```bash
-# Download and run the install script
-curl -fsSL https://ddev.com/install.sh | bash
-# https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/#linux
-```
-
-That's it. Now you are ready to build in containerized PHP.
-
-## Create your framework
+## Development objective
 
 One of the most important development principles is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for activities between multiple projects. That is why it makes sense to create your own framework, in case you are working on projects that do not require a feature-rich framework.
 
@@ -68,7 +39,37 @@ To achieve above features, following components would be essential as part of ou
 
 In this example we will build our own framework, based on a DDEV development environment, standard PHP components using [Smyfony packages](https://symfony.com/) and modern styling using [TailwindCSS](https://tailwindcss.com/). The final project can be found in this Github repository: [tertek/new-php-framework](https://github.com/tertek/new-php-framework).
 
-### Create a generic PHP project with ddev
+## Requirements
+
+It is assumed that you are using Linux and that you have installed necessary pre-requisites:
+
+- [Git](https://git-scm.com/)
+- [Docker](https://docs.docker.com/engine/install/)
+
+## Setup Development Environment with DDEV
+
+The classical approach to developing PHP websites on Windows or MacOS has always been using a tool that emulates a LEMP/LAMP environment, where PHP will run seamlessly. Well known tools are MAMP, XAMPP or Laragon. Since all of these tools have their different advantages and compatibilities, there was never a real winner between them. Another option is to use virtual machines or to directly setup a webserver on barebones Linux. But since the virtualization through Docker has become much easier than ever, a more lightweight approach has been achieved for PHP Development. 
+
+These new tools are built upon Docker and abstract the whole container handling away, enabling developers to focus on just spinning up the services that they need through a simple CLI.
+
+Currently, most prominent tools that can be ussed accross PHP projects are:
+
+- [ddev](https://ddev.com/): Docker-based PHP development environments.
+- [lando](https://lando.dev): Instant dev environments for all your projects.
+- [docksal](https://docksal.io): All-purpose web-development environment based on Docker and Docker Compose. (MacOs)
+
+I chose ddev since it seems most straighforward to bootstrap a project and has a lightweight & well-documented CLI. Feel free to use any other tool though.
+
+A simple way to install ddev with the install script:
+
+```bash
+# Download and run the install script
+curl -fsSL https://ddev.com/install.sh | bash
+# https://ddev.readthedocs.io/en/stable/users/install/ddev-installation/#linux
+```
+
+Now we are ready to build in containerized PHP. DDEV supports different project types to start with. Since we are building our framework from scratch, we will start with a generic PHP project.
+
 
 Create a new project directory and name it as you want your framework to be called. Inside the directory run ddev config specified to our needs:
 
@@ -159,52 +160,8 @@ Now that we have the basic structure of our framework ready, let's run it and se
 
 `ddev launch` will start ddev, build required containers and launch your project on your localhost. It will auto-configure your `etc/host` and create local urls as <project>.ddev.site. Navigating to the site's url should show you a plain page with a 'Hello World'.
 
-## Add a template engine
-
-Install Twig with Composer:
-```bash
-dev composer require "twig/twig:^3.0"
-```
-
-Remove `pages/home.php` because we will load all pages as Twig templates:
-```bash
-rm pages/home.php
-```
-
-Add a new `pages/home.twig`:
-```php
-<!doctype html>
-<html>
-    <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    </head>
-    <body>
-    <h1>
-        Hello world
-    </h1>
-    </body>
-</html>
-```
-
-Add Twig environment and load Twig template for homepage in `bootstrap/app.php`:
-```php
-<?php
-use Twig\Loader\FilesystemLoader;
-use Twig\Environment;
-
-
-//  Create Twig loader and environment
-$loader = new FilesystemLoader( __DIR__ . '/../pages/');
-$twig = new Environment($loader);
-
-// Load Twig Template for Home page
-echo $twig->render('home.twig');
-```
-
-The result should be another 'Hello World' when you navigate to your site, but this time the content will be loaded from a Twig template.
 
 ### Next
 
 
-In the next part of this series we will integrate frontend built tools and libraries to the framework. 
+In the next part of this series we will integrate frontend build tools and libraries to the framework. 
