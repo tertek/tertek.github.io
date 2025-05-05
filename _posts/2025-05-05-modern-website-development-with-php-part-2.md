@@ -130,6 +130,7 @@ ddev vite
 
 #### Example Integration
 
+First, let's have an example integration following the [Backend Integration Guide](https://vite.dev/guide/backend-integration) to understand the core idea.
 To reference our styles in our website, simply replace `pages/home.php` with following:
 
 ```html
@@ -152,7 +153,7 @@ To reference our styles in our website, simply replace `pages/home.php` with fol
 </html>
 ```
 
-`getenv('VITE_SERVER_URI')` will insert the URI to the Vite Development Server, where we will include the Vite Client and our `app.js`. Through this, styles will be imported with fill Hot Module Reloading support.
+`getenv('VITE_SERVER_URI')` will insert the URI to the Vite Development Server, where we will include the Vite Client and our `app.js`. Through this, styles will be imported with Hot Module Reloading support.
 
 #### Full Integration
 
@@ -205,6 +206,84 @@ Add the created tags in `pages/home.php`:
     <?= $tags->css ?>
     </head>
     <body>
+    <h1>
+        Hello world
+    </h1>
+    <?= $tags->js ?>
+    </body>
+</html>
+```
+
+At this point, we have fully integrated Vite build tool into our PHP backend using ddev as our development environment. In the next section, we will see how we can integrate a frontend library, such as TailwindCSS into our framework.
+
+## Integrating CSS Library "Tailwind CSS"
+We are following the installation instructions to [install Tailwind CSS using Vite](https://tailwindcss.com/docs/installation/using-vite).
+
+Install Tailwind CSS:
+
+```bash
+ddev npm install tailwindcss @tailwindcss/vite
+```
+
+Configure the Vite plugin in `vite.config.ts`:
+```js
+import { defineConfig } from "vite"
+import tailwindcss from '@tailwindcss/vite'
+import path from "path"
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  // Add entrypoint
+  build: {
+    // our entry
+    rollupOptions: {
+      input: path.resolve(__dirname, "resources/js/app.js"),
+    },
+
+    // manifest
+    manifest: true,
+
+    outDir: './build',
+  },
+
+  // Adjust Vite's dev server for DDEV
+  // https://vitejs.dev/config/server-options.html
+  server: {
+    // Respond to all network requests
+    host: "0.0.0.0",
+    strictPort: true,
+    // Defines the origin of the generated asset URLs during development, this must be set to the
+    // Vite dev server URL given by ddev-vite-sitecar add-on variable VITE_SERVER_URI.
+    origin: process.env.VITE_SERVER_URI,
+    // Configure CORS securely for the Vite dev server to allow requests from *.ddev.site domains,
+    // supports additional hostnames (via regex). If you use another `project_tld`, adjust this.
+    cors: {
+      origin: /https?:\/\/([A-Za-z0-9\-\.]+)?(\.ddev\.site)(?::\d+)?$/,
+    },
+  },
+
+  plugins: [
+    tailwindcss(),
+  ],
+  
+})
+```
+
+Import Tailwind CSS in `resources/css/app.css` and remove other style rules:
+```css
+@import "tailwindcss";
+```
+
+Start using Tailwind CSS, by adding utility classes to the h2 element in `pages/home.php`:
+```php
+<!doctype html>
+<html>
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <?= $tags->css ?>
+    </head>
+    <body>
     <h1 class="text-3xl font-bold underline">
         Hello world
     </h1>
@@ -213,7 +292,8 @@ Add the created tags in `pages/home.php`:
 </html>
 ```
 
-## Integrating CSS Library "Tailwind"
+At this point we have also integrated Tailwind CSS into our framework.
 
-## Integrating JavaScript Library "Svelte"
+### Next
 
+In the next chapter we will build our framework components, to accomplish the features that we have defined in the first part.
