@@ -4,7 +4,7 @@ tags: php
 
 # Modern website development with PHP (Part 1)
 
-Not always you will need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
+Not always will you need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
 While there are many PHP frameworks that help you to build cutting-edge web applications, there seems to be a lack of guides on how to build websites using modern technology, without starting from scratch or using a framework that has too many features. 
 
@@ -17,7 +17,7 @@ The first part specifies the development objective and the defines the features 
 - [Part 3: Creating a component-based minimal framework](#tbd)
 
 
-## Development objective
+## Introduction
 
 One of the most important development principles is [DRY](https://www.digitalocean.com/community/tutorials/what-is-dry-development), which means "don't repeat yourself". This is not only relevant for the code you write within one project, but also for activities between multiple projects. That is why it makes sense to create your own framework, in case you are working on projects that do not require a feature-rich framework.
 
