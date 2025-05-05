@@ -2,7 +2,7 @@
 tags: php
 ---
 
-# Modern website development with PHP (Part 1)
+# Modern website development with PHP - 1
 
 Not always will you need to build a web application, but only a website that consumes a data source and displays it as page or site. Of course it may include features as forms, which means it has more capabilities than simple websites, but still it is not enough to count as an application.
 
@@ -13,7 +13,7 @@ This guide explains the bare minimum of setting up your development environment,
 The first part specifies the development objective and the defines the features of the framework we would like to achieve. Based on that, we will setup a docker-based modern development environment. Finally, in the last section of this part, we will define an initial project structure that will serve as a foundation of the framework to be created.
 
 - **Part 1: Setting up development environment and project structure**
-- [Part 2: Integrating front-end build tools and libraries](#tbd)
+- [Part 2: Integrating front-end build tools and libraries](/2025/05/05/modern-website-development-with-php-part-2.html)
 - [Part 3: Creating a component-based minimal framework](#tbd)
 
 
@@ -164,4 +164,4 @@ Now that we have the basic structure of our framework ready, let's run it and se
 ### Next
 
 
-In the next part of this series we will integrate frontend build tools and libraries to the framework. 
+In the [next part](/2025/05/05/modern-website-development-with-php-part-2.html) of this series we will integrate frontend build tools and libraries to the framework. 
