@@ -89,17 +89,8 @@ export default defineConfig({
   },
 })
 ```
-Add the following scripts to your `package.json` for being able to easily start vite from ddev.
 
-```json
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-```
-
-We can now launch Vite with `ddev vite` or `ddev npm run dev` which will both spin up the Vite Development Server that is being server from ddev under its own Subdomain (it is stored in the variable VITE_SERVER_URI). This means that during development our assets will be served from the development server, and after build from the output directory `/build`. 
+We can now launch Vite with `ddev vite` which will spin up the Vite Development Server that is being server from ddev under its own Subdomain (it is stored in the variable VITE_SERVER_URI). This means that during development our assets will be served from the development server, and after build from the output directory `/build`. 
 
 ### Vite PHP Backend Integration
 
