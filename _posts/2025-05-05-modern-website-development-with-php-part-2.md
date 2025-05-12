@@ -26,7 +26,7 @@ In the last part of the guide we have prepared the development environment with 
 
 ## Setup Vite with DDEV
 
-Vite is a modern build tool that fascilitates the integration of front-end libraries also for development. You can have a more general introduction to using DDEV with Vite [here](https://ddev.com/blog/working-with-vite-in-ddev/). It is easy to setup ddev with vite by using an add-on called [ddev-vite-sitecar](https://github.com/s2b/ddev-vite-sidecar). The Vite development server is exposed as a https://vite.* subdomain to your project’s main domain, which means that no ports need to be exposed to the host system. 
+Vite is a modern build tool that fascilitates the integration of front-end libraries also for development. You can have a more general introduction to using DDEV with Vite [here](https://ddev.com/blog/working-with-vite-in-ddev/). It is easy to setup ddev with vite by using an add-on called [ddev-vite-sidecar](https://github.com/s2b/ddev-vite-sidecar). The Vite development server is exposed as a https://vite.* subdomain to your project’s main domain, which means that no ports need to be exposed to the host system. 
 
 ### Add Vite support to ddev
 
@@ -58,6 +58,10 @@ import path from "path"
 
 // https://vitejs.dev/config/
 export default defineConfig({
+
+  //  Do not copy public dir into build
+  publicDir: false,
+
   // Add entrypoint
   build: {
     // Defines the input files to be watched and build
@@ -66,10 +70,10 @@ export default defineConfig({
     },
 
     // manifest
-    manifest: true,
+    manifest: 'manifest.json',
 
     // Defines the destination directory of the generated assets
-    outDir: './build',
+    outDir: './public/build',
   },
 
   // Adjust Vite's dev server for DDEV
@@ -163,13 +167,17 @@ Load php-vite and configure to be used in `bootstrap/app.php`:
 
 use mindplay\vite\Manifest;
 
-const BUILD_PATH = __DIR__ . "/../build";
-const ENTRY_PATH = __DIR__ . "/../resources/js/app.js";
+const BUILD_PATH = __DIR__ . "/../public/build/";
+const ENTRY_POINT = "resources/js/app.js";
 
 /**
  * VITE BACKEND INTEGRATION
  * 
  * Create tags based on mode, parses manifest or includes Vite development server
+ * 
+ * $manifest_path: Points to the Vite manifest.json file created for the production build.
+ * $base_path: is relative to your public web root - it is the root folder from which Vite's production 
+ * assets are served, and/or the root folder from which Vite serves assets dynamically in development mode.
  * 
  */
 function getVite($manifest_path, $base_path, $dev) {
@@ -180,18 +188,19 @@ function getVite($manifest_path, $base_path, $dev) {
         dev: $dev
     );
 
-    return $manifest->createTags(ENTRY_PATH);
+    return $manifest->createTags(ENTRY_POINT);
 }
 /**
  * Vite Development Server is running if headers return 200 from Vite Server URI
  * Otherwise and if exists, we will use build directory
  * Else, we will insert empty strings and show a warning message in the console.
+ *
  */
 if(substr(get_headers(getenv('VITE_SERVER_URI') . '/@vite/client')[0], 9, 3) == 200) {
     $vite = getVite('', getenv('VITE_SERVER_URI') . "/", true);
 
 } else if(is_dir(BUILD_PATH)) {
-    $vite = getVite(BUILD_PATH, BUILD_PATH . '/.vite/manifest.json', false);    
+    $vite = getVite( BUILD_PATH . '/manifest.json', "build/", false);
 }
 else {
     $vite = (object) [
